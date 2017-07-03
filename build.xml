@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     28.03.2014 12:32:30                                                        
+
+     robo    
+     The Robo library used to build Robotic-Java applications.
+                   
+     Mircea Diaconescu                                                               
+     ====================================================================== -->
+<project name="robo" default="default">
+	<description>
+            The Robo library used to build Robotic-Java applications.
+    </description>
+	<property name="src.dir" value="src" />
+	<property name="lib.dir" value="lib" />
+	<property name="classes.dir" value="classes" />
+	<property name="jar.dist.dir" value="dist" />
+	<property name="build.dir" value="${jar.dist.dir}/${classes.dir}" />
+	<property name="jar.dist.file" value="robo.jar" />
+	<path id="classpath">
+	    <fileset dir="${lib.dir}" includes="**/*.jar"/>
+	</path>
+	<!-- ================================= 
+          target: default (create jar)              
+         ================================= -->
+	<target name="default" depends="compile" description="The Robo library used to build Robotic-Java applications.">
+		<jar destfile="${jar.dist.dir}/${jar.dist.file}" basedir="${build.dir}" />
+		<antcall target="cleanup" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: compile                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="compile">
+		<mkdir dir="${build.dir}"/>
+		<javac srcdir="${src.dir}/robo" destdir="${build.dir}" includeantruntime="false" debug="true">
+			<classpath refid="classpath" />
+			<compilerarg value="-Xlint" />
+		</javac>
+	</target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+	          target: clenup                      
+	         - - - - - - - - - - - - - - - - - -->
+	<target name="cleanup">
+		<delete dir="${build.dir}"/> 
+	</target>
+</project>
